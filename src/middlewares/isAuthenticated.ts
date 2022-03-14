@@ -23,6 +23,10 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
 
     try{   //Validar o token
         const {sub} = verify(token, process.env.JWT_SECRET)  as Payload// Pegando a chave screta do arquivo env
+
+        //Recuperar o id do token dentro de uma variavel user_id dentro do req.
+        req.user_id = sub
+
         return next() // Pra não deixar a aplicação parar
     }catch(err){
         return res.status(401).end()  //Não autorizado
