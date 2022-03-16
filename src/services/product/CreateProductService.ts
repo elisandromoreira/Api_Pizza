@@ -1,21 +1,26 @@
 import prismaClinte from "../../prisma";
-
-
-interface ProductRequest{
+interface ProductRequest {
     name: string,
     price: string,
     description: string,
-    categoty_id: string,
-    banner: string
+    category_id: string,
+    banner: string,
 }
+class CreateProductService {
+    async execute({ name, price, description, banner, category_id }: ProductRequest) {
 
-
-class CreateProductService{
-    async execute({name, price, description, categoty_id}:ProductRequest){
-
-        return {ok: true}
-
+        const product = await prismaClinte.product.create({
+            data: {
+                name: name,
+                price: price,
+                description: description,
+                banner: banner,
+                category_id: category_id,
+            }
+        })
+        return product
     }
 }
 
-export {CreateProductService}
+export { CreateProductService }
+
